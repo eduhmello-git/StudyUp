@@ -1,0 +1,82 @@
+﻿@page
+@model StudyUp.Pages.DisciplinasModel
+
+@{
+    ViewData["Title"] = "Disciplinas";
+}
+
+<div class="dashboard">
+
+    <section class="welcome-section">
+        <h1>Minhas disciplinas 📚</h1>
+        <p>Organize as matérias que você está estudando.</p>
+    </section>
+
+    <section class="agenda-section">
+        <h2>Nova disciplina</h2>
+
+        <form method="post" class="discipline-form">
+            <label asp-for="Nome">Nome da disciplina</label>
+
+            <input asp-for="Nome"
+                   class="form-control"
+                   placeholder="Ex.: Banco de Dados"
+                   maxlength="100" />
+
+            <span asp-validation-for="Nome"
+                  class="text-danger"></span>
+
+            <button type="submit">
+                + Adicionar disciplina
+            </button>
+        </form>
+
+        @if (!string.IsNullOrEmpty(Model.MensagemErro))
+        {
+            <p class="text-danger">@Model.MensagemErro</p>
+        }
+    </section>
+
+    <section class="agenda-section">
+        <h2>Disciplinas cadastradas</h2>
+        
+        @if (TempData["MensagemExclusao"] != null)
+        {
+            <p>@TempData["MensagemExclusao"]</p>
+        }
+
+        @if (Model.Disciplinas.Count == 0)
+        {
+            <div class="empty-state">
+                <p>Nenhuma disciplina cadastrada ainda.</p>
+            </div>
+        }
+        else
+        {
+            <div class="discipline-list">
+                
+                @foreach (var disciplina in Model.Disciplinas)
+                {
+                    <div class="discipline-card">
+                        <span>📖 @disciplina.Nome</span>
+
+                        <form method="post"
+                              asp-page-handler="Excluir"
+                              onsubmit="return confirm('Deseja realmente excluir esta disciplina?');">
+
+                            <input type="hidden"
+                                   name="id"
+                                   value="@disciplina.Id" />
+
+                            <button type="submit" class="btn-delete">
+                                🗑 Excluir disciplina
+                            </button>
+                        </form>
+                    </div>
+                }
+
+            </div>
+        }
+    </section>
+
+</div>

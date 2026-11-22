@@ -1,0 +1,278 @@
+﻿@page
+@model StudyUp.Pages.IndexModel
+
+@{
+    ViewData["Title"] = "Minha agenda";
+}
+
+<div class="dashboard">
+
+    <section class="welcome-section">
+        <h1>Olá, estudante! 👋</h1>
+        <p>Vamos organizar seus estudos?</p>
+    </section>
+
+    <section class="summary-section">
+        
+        <a asp-page="/Pendencias"
+           class="summary-card pending-card pending-link">
+
+            <span class="summary-number">@Model.Pendentes</span>
+            <span class="summary-label">Pendentes</span>
+
+        </a>
+
+
+        <div class="summary-card completed-card">
+            <span class="summary-number">@Model.Concluidas</span>
+            <span class="summary-label">Concluídas</span>
+        </div>
+    </section>
+
+    <section class="agenda-section">
+
+        <
+            <div class="section-heading">
+                <h2>Minha agenda</h2>
+            </div>
+
+            <div class="view-switch">
+                <a asp-page="/Index"
+                   asp-route-data="@Model.DataSelecionada.ToString("yyyy-MM-dd")"
+                   asp-route-visualizacao="dia"
+                   class="@(Model.Visualizacao == "dia" ? "active" : "")">
+                    Dia
+                </a>
+
+                <a asp-page="/Index"
+                   asp-route-data="@Model.DataSelecionada.ToString("yyyy-MM-dd")"
+                   asp-route-visualizacao="semana"
+                   class="@(Model.Visualizacao == "semana" ? "active" : "")">
+                    Semana
+                </a>
+            </div>
+
+            <p class="agenda-period">
+                @if (Model.Visualizacao == "semana")
+                {
+                    <span>
+                        @Model.DataSelecionada.ToString("dd/MM/yyyy")
+                        até
+                        @Model.DataFinal.ToString("dd/MM/yyyy")
+                    </span>
+                }
+                else
+                {
+                    <span>
+                        @Model.DataSelecionada.ToString("dd/MM/yyyy")
+                    </span>
+                }
+            </p>
+
+
+        <form method="get" class="agenda-date-form">
+                <input type="hidden"
+                       name="visualizacao"
+                       value="@Model.Visualizacao" />
+            <label for="data">Escolha uma data</label>
+
+            <input type="date"
+                   id="data"
+                   name="data"
+                   class="form-control"
+                   value="@Model.DataSelecionada.ToString("yyyy-MM-dd")" />
+
+            <button type="submit">Ver atividades</button>
+        </form>
+
+        @if (!string.IsNullOrEmpty(Model.MensagemErro))
+        {
+            <p class="text-danger">@Model.MensagemErro</p>
+        }
+
+        @if (Model.Atividades.Count == 0)
+        {
+            <div class="empty-state">
+                <h3>Nenhuma atividade nesta data</h3>
+                <p>
+                    Escolha outro dia ou agende uma nova atividade.
+                </p>
+            </div>
+        }
+        else
+        {
+            <div class="discipline-list">
+
+                
+                @foreach (var atividade in Model.Atividades)
+                {
+                        <div class="discipline-card activity-item @(atividade.EstaAtrasada ? "overdue-activity" : "")">
+
+                        <div class="activity-info">
+                            <strong>@atividade.Nome</strong>
+                            <p>@atividade.Disciplina</p>
+                                <p class="activity-date">
+                                    📅 @atividade.DataPlanejada.ToString("dd/MM/yyyy")
+                                </p>
+
+                            <span class="activity-status">
+                                @atividade.Status
+                            </span>
+                            
+                                @if (atividade.EstaAtrasada)
+                                {
+                                    <span class="overdue-label">
+                                        ⚠ Atividade atrasada
+                                    </span>
+                                }
+
+                        </div>
+
+                        <div class="activity-actions">
+
+                            @if (atividade.Status == "Pendente")
+                            {
+                                <form method="post"
+                                      asp-page-handler="AlterarStatus">
+                                      
+                                    <input type="hidden"
+                                           name="visualizacao"
+                                           value="@Model.Visualizacao" />
+
+
+                                    <input type="hidden"
+                                           name="id"
+                                           value="@atividade.Id" />
+
+                                    <input type="hidden"
+                                           name="novoStatus"
+                                           value="Concluída" />
+
+                                    <input type="hidden"
+                                           name="data"
+                                           value="@Model.DataSelecionada.ToString("yyyy-MM-dd")" />
+
+                                    <button type="submit" class="btn-complete">
+                                        ✓ Concluir
+                                    </button>
+                                </form>
+
+                                <form method="post"
+                                      asp-page-handler="AlterarStatus">
+
+                                        <input type="hidden"
+                                               name="visualizacao"
+                                               value="@Model.Visualizacao" />
+
+                                      <input type="hidden"
+                                           name="id"
+                                           value="@atividade.Id" />
+
+                                    <input type="hidden"
+                                           name="novoStatus"
+                                           value="Cancelada" />
+
+                                    <input type="hidden"
+                                           name="data"
+                                           value="@Model.DataSelecionada.ToString("yyyy-MM-dd")" />
+
+                                    <button type="submit" class="btn-cancel">
+                                        Cancelar
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form method="post"
+                                      asp-page-handler="AlterarStatus">
+
+                                        <input type="hidden"
+                                               name="visualizacao"
+                                               value="@Model.Visualizacao" />
+
+                                    <input type="hidden"
+                                           name="id"
+                                           value="@atividade.Id" />
+
+                                    <input type="hidden"
+                                           name="novoStatus"
+                                           value="Pendente" />
+
+                                    <input type="hidden"
+                                           name="data"
+                                           value="@Model.DataSelecionada.ToString("yyyy-MM-dd")" />
+
+                                    <button type="submit" class="btn-reopen">
+                                        Reabrir
+                                    </button>
+                                </form>
+                            }
+
+                        </div>
+
+                        <form method="post"
+                              asp-page-handler="Remarcar"
+                              class="reschedule-form">
+
+                                <input type="hidden"
+                                       name="visualizacao"
+                                       value="@Model.Visualizacao" />
+
+                            <input type="hidden"
+                                   name="id"
+                                   value="@atividade.Id" />
+
+                            <input type="hidden"
+                                   name="data"
+                                   value="@Model.DataSelecionada.ToString("yyyy-MM-dd")" />
+
+                            <label>Remarcar para:</label>
+
+                            <input type="date"
+                                   name="novaData"
+                                   class="form-control"
+                                   value="@atividade.DataPlanejada.ToString("yyyy-MM-dd")"
+                                   required />
+
+                            <button type="submit" class="btn-reschedule">
+                                Salvar nova data
+                            </button>
+
+                        </form>
+                        
+                            <form method="post"
+                                  asp-page-handler="Excluir"
+                                  onsubmit="return confirm('Deseja realmente excluir esta atividade?');">
+
+                                <input type="hidden"
+                                       name="id"
+                                       value="@atividade.Id" />
+
+                                <input type="hidden"
+                                       name="data"
+                                       value="@Model.DataSelecionada.ToString("yyyy-MM-dd")" />
+
+                                <input type="hidden"
+                                       name="visualizacao"
+                                       value="@Model.Visualizacao" />
+
+                                <button type="submit" class="btn-delete">
+                                    🗑 Excluir atividade
+                                </button>
+                            </form>
+
+
+                    </div>
+                }
+
+
+            </div>
+        }
+
+    </section>
+
+    <a asp-page="/Agendar" class="new-activity-link">
+        + Agendar nova atividade
+    </a>
+
+</div>

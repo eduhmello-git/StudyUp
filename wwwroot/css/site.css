@@ -1,0 +1,465 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+/* ===== IDENTIDADE VISUAL STUDYUP ===== */
+
+body {
+    background-color: #F3F1F8;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #302B3D;
+}
+
+/* Estrutura principal */
+
+.app-container {
+    max-width: 430px;
+    min-height: 100vh;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.06);
+}
+
+/* Cabeçalho */
+
+.app-header {
+    padding: 22px;
+    border-bottom: 1px solid #EEEAF4;
+}
+
+.app-logo {
+    color: #7652B5;
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Conteúdo */
+
+.app-content {
+    flex: 1;
+    padding: 35px 22px;
+}
+
+/* Menu inferior */
+
+.app-navigation {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 18px 8px;
+    border-top: 1px solid #EEEAF4;
+    background-color: #FFFFFF;
+}
+
+    .app-navigation a {
+        color: #77718A;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+        .app-navigation a:hover {
+            color: #7652B5;
+        }
+
+/* Botões */
+
+button {
+    background-color: #7652B5;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+    button:hover {
+        background-color: #604095;
+    }
+
+/* ===== PAINEL INICIAL ===== */
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Saudação */
+
+.welcome-section h1 {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.welcome-section p {
+    color: #77718A;
+    margin: 0;
+}
+
+/* Cartões de resumo */
+
+.summary-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.summary-card {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 14px;
+    gap: 5px;
+}
+
+.pending-card {
+    background-color: #F0EAFB;
+    color: #6846A5;
+}
+
+.completed-card {
+    background-color: #EAF5EF;
+    color: #347A50;
+}
+
+.summary-number {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.summary-label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Agenda */
+
+.agenda-section h2 {
+    font-size: 19px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+    .section-heading span {
+        color: #7652B5;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+.empty-state {
+    background-color: #F8F7FA;
+    border: 1px solid #EEEAF4;
+    border-radius: 14px;
+    padding: 25px 18px;
+    text-align: center;
+}
+
+    .empty-state h3 {
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .empty-state p {
+        color: #77718A;
+        font-size: 13px;
+        margin: 0;
+        line-height: 1.5;
+    }
+
+/* ===== DISCIPLINAS ===== */
+
+.discipline-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+    .discipline-form label {
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .discipline-form input {
+        padding: 12px;
+        border: 1px solid #DDD6EA;
+        border-radius: 10px;
+    }
+
+    .discipline-form button {
+        margin-top: 5px;
+    }
+
+.discipline-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.discipline-card {
+    background-color: #F8F7FC;
+    border: 1px solid #EEEAF4;
+    border-radius: 12px;
+    padding: 18px;
+    font-weight: 600;
+}
+.app-navigation {
+    gap: 4px;
+}
+
+    .app-navigation a {
+        font-size: 12px;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+.agenda-date-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+    .agenda-date-form button {
+        background: #7456c8;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 12px;
+        font-weight: 600;
+    }
+
+.agenda-activity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+    .agenda-activity p {
+        margin: 5px 0 0;
+        font-size: 13px;
+        color: #666;
+    }
+
+.activity-status {
+    font-size: 12px;
+    padding: 6px 10px;
+    background: #eee7ff;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.new-activity-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    padding: 14px;
+    background: #7456c8;
+    color: white;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+    .new-activity-link:hover {
+        color: white;
+        background: #6042b5;
+    }
+
+.activity-item {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+}
+
+.activity-info p {
+    margin: 4px 0 8px;
+    font-size: 13px;
+    color: #666;
+}
+
+.activity-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+    .activity-actions form {
+        flex: 1;
+    }
+
+    .activity-actions button,
+    .btn-reschedule {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 9px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+.btn-complete {
+    background: #d8f3df;
+    color: #246b38;
+}
+
+.btn-cancel {
+    background: #ffe0e0;
+    color: #a32929;
+}
+
+.btn-reopen {
+    background: #eee7ff;
+    color: #6042b5;
+}
+
+.reschedule-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid #e8e3f2;
+}
+
+    .reschedule-form label {
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+.btn-reschedule {
+    background: #7456c8;
+    color: white;
+}
+
+/* Alternância entre agenda diária e semanal */
+
+.view-switch {
+    display: flex;
+    gap: 8px;
+    margin: 18px 0 12px;
+    padding: 5px;
+    background: #f1edfa;
+    border-radius: 12px;
+}
+
+    .view-switch a {
+        flex: 1;
+        text-align: center;
+        padding: 10px;
+        border-radius: 9px;
+        text-decoration: none;
+        color: #665a80;
+        font-weight: 600;
+    }
+
+        .view-switch a.active {
+            background: #7456c8;
+            color: white;
+        }
+
+.agenda-period {
+    color: #7456c8;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+/* Destaque das atividades atrasadas */
+
+.overdue-activity {
+    background: #fff6f3;
+    border: 1px solid #f1b5a8;
+}
+
+.overdue-label {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 6px 10px;
+    background: #ffe1d9;
+    color: #a63b24;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.activity-date {
+    font-size: 12px;
+    color: #777;
+    margin-top: 4px;
+}
+.pending-link {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+    .pending-link:hover {
+        color: inherit;
+        filter: brightness(0.97);
+    }
+
+    .pending-link .summary-number,
+    .pending-link .summary-label {
+        color: #7456c8;
+    }
+.btn-delete {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e6a6a6;
+    border-radius: 9px;
+    background: #fff1f1;
+    color: #a32929;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+    .btn-delete:hover {
+        background: #ffe0e0;
+    }

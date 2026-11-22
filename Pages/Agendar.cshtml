@@ -1,0 +1,94 @@
+﻿@page
+@model StudyUp.Pages.AgendarModel
+
+@{
+    ViewData["Title"] = "Agendar atividade";
+}
+
+<div class="dashboard">
+
+    <section class="welcome-section">
+        <h1>Agendar atividade 📅</h1>
+        <p>Planeje o que você pretende estudar.</p>
+    </section>
+
+    <section class="agenda-section">
+
+        <h2>Novo agendamento</h2>
+
+        @if (TempData["Sucesso"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["Sucesso"]
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.MensagemErro))
+        {
+            <div class="alert alert-danger">
+                @Model.MensagemErro
+            </div>
+        }
+
+        <form method="post" class="discipline-form">
+
+            <label asp-for="DisciplinaId">Disciplina</label>
+
+            <select asp-for="DisciplinaId" class="form-select">
+                <option value="0">Selecione uma disciplina</option>
+
+                @foreach (var disciplina in Model.Disciplinas)
+                {
+                    <option value="@disciplina.Id">
+                        @disciplina.Nome
+                    </option>
+                }
+            </select>
+
+            <span asp-validation-for="DisciplinaId"
+                  class="text-danger"></span>
+
+            <label asp-for="CatalogoId">Atividade</label>
+
+            <select asp-for="CatalogoId" class="form-select">
+                <option value="0">Selecione uma atividade</option>
+
+                @foreach (var atividade in Model.Catalogo)
+                {
+                    <option value="@atividade.Id">
+                        @atividade.Nome
+                    </option>
+                }
+            </select>
+
+            <span asp-validation-for="CatalogoId"
+                  class="text-danger"></span>
+
+            <label asp-for="DataPlanejada">Data planejada</label>
+
+            <input asp-for="DataPlanejada"
+                   type="date"
+                   class="form-control" />
+
+            <span asp-validation-for="DataPlanejada"
+                  class="text-danger"></span>
+
+            <button type="submit">
+                + Agendar atividade
+            </button>
+
+        </form>
+
+    </section>
+
+    <section class="agenda-section">
+        <div class="empty-state">
+            <h3>Organize seus estudos</h3>
+            <p>
+                Selecione uma disciplina, escolha uma atividade
+                do catálogo e defina a data planejada.
+            </p>
+        </div>
+    </section>
+
+</div>

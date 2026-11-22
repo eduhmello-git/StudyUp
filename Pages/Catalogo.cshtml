@@ -1,0 +1,82 @@
+﻿@page
+@model StudyUp.Pages.CatalogoModel
+
+@{
+    ViewData["Title"] = "Catálogo";
+}
+
+<div class="dashboard">
+
+    <section class="welcome-section">
+        <h1>Catálogo de atividades 📋</h1>
+        <p>Crie atividades para reutilizar nas suas disciplinas.</p>
+    </section>
+
+    <section class="agenda-section">
+        <h2>Nova atividade</h2>
+
+        <form method="post" class="discipline-form">
+            <label asp-for="Nome">Nome da atividade</label>
+
+            <input asp-for="Nome"
+                   class="form-control"
+                   placeholder="Ex.: Estudar"
+                   maxlength="100" />
+
+            <span asp-validation-for="Nome"
+                  class="text-danger"></span>
+
+            <button type="submit">
+                + Adicionar ao catálogo
+            </button>
+        </form>
+
+        @if (!string.IsNullOrEmpty(Model.MensagemErro))
+        {
+            <p class="text-danger">@Model.MensagemErro</p>
+        }
+    </section>
+
+    <section class="agenda-section">
+        <h2>Atividades cadastradas</h2>
+        
+        @if (TempData["MensagemExclusao"] != null)
+        {
+            <p>@TempData["MensagemExclusao"]</p>
+        }
+
+        @if (Model.Atividades.Count == 0)
+        {
+            <div class="empty-state">
+                <p>Nenhuma atividade cadastrada ainda.</p>
+            </div>
+        }
+        else
+        {
+            <div class="discipline-list">
+                
+                @foreach (var atividade in Model.Atividades)
+                {
+                    <div class="discipline-card">
+                        <span>📝 @atividade.Nome</span>
+
+                        <form method="post"
+                              asp-page-handler="Excluir"
+                              onsubmit="return confirm('Deseja realmente excluir este tipo de atividade?');">
+
+                            <input type="hidden"
+                                   name="id"
+                                   value="@atividade.Id" />
+
+                            <button type="submit" class="btn-delete">
+                                🗑 Excluir
+                            </button>
+                        </form>
+                    </div>
+                }
+
+            </div>
+        }
+    </section>
+
+</div>

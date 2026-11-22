@@ -1,0 +1,125 @@
+﻿@page
+@model StudyUp.Pages.PendenciasModel
+
+@{
+    ViewData["Title"] = "Pendências";
+}
+
+<div class="dashboard">
+
+    <section class="welcome-section">
+        <h1>Minhas pendências 📋</h1>
+        <p>Tudo o que você ainda precisa realizar.</p>
+    </section>
+
+    <section class="agenda-section">
+
+        <div class="section-heading">
+            <h2>Atividades pendentes</h2>
+            <span>@Model.Atividades.Count</span>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.MensagemErro))
+        {
+            <p class="text-danger">@Model.MensagemErro</p>
+        }
+        else if (Model.Atividades.Count == 0)
+        {
+            <div class="empty-state">
+                <h3>Nenhuma pendência!</h3>
+                <p>Você não possui atividades pendentes.</p>
+            </div>
+        }
+        else
+        {
+            <div class="discipline-list">
+
+                @foreach (var atividade in Model.Atividades)
+                {
+                    <div class="discipline-card activity-item
+                        @(atividade.EstaAtrasada ? "overdue-activity" : "")">
+
+                        <div class="activity-info">
+                            <strong>@atividade.Nome</strong>
+                            <p>@atividade.Disciplina</p>
+
+                            <p class="activity-date">
+                                📅 @atividade.DataPlanejada.ToString("dd/MM/yyyy")
+                            </p>
+
+                            @if (atividade.EstaAtrasada)
+                            {
+                                <span class="overdue-label">
+                                    ⚠ Atividade atrasada
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="activity-status">
+                                    Pendente
+                                </span>
+                            }
+                        </div>
+
+                        <form method="post"
+                              asp-page-handler="Concluir">
+
+                            <input type="hidden"
+                                   name="id"
+                                   value="@atividade.Id" />
+
+                            <button type="submit"
+                                    class="btn-complete">
+                                ✓ Concluir
+                            </button>
+                        </form>
+
+                        <form method="post"
+                              asp-page-handler="Remarcar"
+                              class="reschedule-form">
+
+                            <input type="hidden"
+                                   name="id"
+                                   value="@atividade.Id" />
+
+                            <label>Remarcar para:</label>
+
+                            <input type="date"
+                                   name="novaData"
+                                   class="form-control"
+                                   value="@atividade.DataPlanejada.ToString("yyyy-MM-dd")"
+                                   required />
+
+                            <button type="submit"
+                                    class="btn-reschedule">
+                                Salvar nova data
+                            </button>
+                        </form>
+                        
+                        <form method="post"
+                              asp-page-handler="Excluir"
+                              onsubmit="return confirm('Deseja realmente excluir esta atividade?');">
+
+                            <input type="hidden"
+                                   name="id"
+                                   value="@atividade.Id" />
+
+                            <button type="submit" class="btn-delete">
+                                🗑 Excluir atividade
+                            </button>
+                        </form>
+
+
+                    </div>
+                }
+
+            </div>
+        }
+
+    </section>
+
+    <a asp-page="/Index" class="new-activity-link">
+        ← Voltar para a agenda
+    </a>
+
+</div>
